@@ -85,7 +85,7 @@ ol, ul {
 
 .history-element {
   border: none;
-  background: #222222;
+  background: #2d2d2d;
   border: 2px solid #2d2d2d;
   color: white;
   padding: .25em 1em;
@@ -95,6 +95,7 @@ ol, ul {
 
 .history-button {
   cursor: pointer;
+  background: #222222;
   transition: background .25s;
 }
 
