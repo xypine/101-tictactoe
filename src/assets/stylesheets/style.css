@@ -1,3 +1,9 @@
+/* initialize css variables */
+:root {
+  --game-scale: 2;
+}
+/*                          */
+
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 0;
@@ -9,6 +15,26 @@ body {
   background: #191919;
   color: white;
   overflow-x: hidden;
+}
+
+/* Sensible link colors for a dark theme */
+a {
+  color: #9e9eff;
+}
+
+a:active {
+  color: #ff9c9e;
+}
+
+a:visited {
+  color: #d0acf0;
+}
+
+.madeBy {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  opacity: 0.8;
 }
 
 ol, ul {
@@ -34,16 +60,17 @@ ol, ul {
   color: white;
   border: 1px solid #999;
   float: left;
-  font-size: 24px;
+  font-size: calc(24px * var(--game-scale));
   font-weight: bold;
-  line-height: 34px;
-  height: 34px;
+  line-height: calc(34px * var(--game-scale));
+  height: calc(34px * var(--game-scale));
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: calc(34px * var(--game-scale));
   cursor: pointer;
+  transition: background 500ms;
 }
 
 .square:focus {
@@ -85,18 +112,21 @@ ol, ul {
 
 .history-element {
   border: none;
-  background: #2d2d2d;
-  border: 2px solid #2d2d2d;
+  background: var(--bg, #2d2d2d);
+  border: 2px solid var(--bg, #2d2d2d);
   color: white;
   padding: .25em 1em;
   margin:  .25em 0;
   border-radius: .25em;
+
+  transition: all 500ms;
+  transition-property: background, border;
 }
 
 .history-button {
   cursor: pointer;
   background: #222222;
-  transition: background .25s;
+  transition: background 250ms;
 }
 
 .history-button:hover {

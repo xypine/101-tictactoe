@@ -44,6 +44,10 @@ function calculateWinner(squares) {
   return null;
 }
 
+function getStatusColor(winner) {
+  return winner == "draw" ? "#2d2d2d" : (winner ? "green" : "#131313");
+}
+
 class HistoryManager extends React.Component {
 
   handleClick(index) {
@@ -62,7 +66,7 @@ class HistoryManager extends React.Component {
     }
     return(
       <div className="history-container">
-        <button className="history-element">
+        <button className="history-element" style={{ "--bg": getStatusColor(this.props.winner) }} >
           Current
         </button>
         {elements.reverse()} 
@@ -79,7 +83,7 @@ class Board extends React.Component {
 
   renderSquare(i) {
     return <Square 
-      style={{ "--bg": this.props.gameOver ? "green" : "#131313" }} 
+      style={{ "--bg": getStatusColor(this.props.winner) }} 
       value={this.props.squares[i]} 
       onClick={() => this.props.handleClick(i)} 
     />;
@@ -128,11 +132,10 @@ class Game extends React.Component {
   }
 
   rollbackHistory(index) {
-    const newHistory = this.state.history.slice(0, index);
     this.setState(
       {
         ...this.state,
-        history: newHistory,
+        history: this.state.history.slice(0, index),
       }
     );
   }
@@ -180,10 +183,10 @@ class Game extends React.Component {
       <>
         <div className="game">
           <div className="game-history">
-            <HistoryManager history={history} rollbackHistoryCallback={ (i)=>{this.rollbackHistory(i)} } />
+            <HistoryManager history={history} rollbackHistoryCallback={ (i)=>{this.rollbackHistory(i)} } winner={winner} />
           </div>
           <div className="game-board">
-            <Board squares={current.squares} handleClick={ (i) => {this.handleClick(i)} } gameOver={winner} />
+            <Board squares={current.squares} handleClick={ (i) => {this.handleClick(i)} } winner={winner} />
           </div>
           <div className="game-info">
             <div>{status}</div>
