@@ -9,9 +9,15 @@ import './assets/stylesheets/style.css'
 
 function Square(props) {
   return (
-    <button className="square" onClick={props.onClick}>
+    <button style={props.style} className="square" onClick={props.onClick}>
       {props.value}
     </button>
+  );
+}
+
+function Spacer(props) {
+  return (
+    <div className="spacer"></div>
   );
 }
 
@@ -48,15 +54,19 @@ class HistoryManager extends React.Component {
     const history = this.props.history.slice(1);
     const elements = [];
     for(let i in history){
-      elements.push( <button className="history-element history-button" onClick={ () => this.handleClick( (+i) + 1 ) }>{ (+i) + 1}</button> );
+      elements.push( 
+        <button className="history-element history-button" onClick={ () => this.handleClick( (+i) + 1 ) }>
+          { i == "0" ? "Start" : (+i) + 1}
+        </button> 
+      );
     }
     return(
       <div className="history-container">
-        {elements}
         <button className="history-element">
           Current
         </button>
-      </div>
+        {elements.reverse()} 
+      </div> // reverse so the latest entry will be on the top
     );
   }
 }
@@ -68,7 +78,11 @@ class Board extends React.Component {
   }
 
   renderSquare(i) {
-    return <Square value={this.props.squares[i]} onClick={() => this.props.handleClick(i)} />;
+    return <Square 
+      style={{ "--bg": this.props.gameOver ? "green" : "#131313" }} 
+      value={this.props.squares[i]} 
+      onClick={() => this.props.handleClick(i)} 
+    />;
   }
 
   render() {
@@ -160,19 +174,23 @@ class Game extends React.Component {
     if (winner) {
       status = 'Winner: ' + winner;
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      status = 'Next player: ' + (this.isXnext() ? 'X' : 'O');
     }
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board squares={current.squares} handleClick={ (i) => {this.handleClick(i)} } />
+      <>
+        <div className="game">
+          <div className="game-history">
+            <HistoryManager history={history} rollbackHistoryCallback={ (i)=>{this.rollbackHistory(i)} } />
+          </div>
+          <div className="game-board">
+            <Board squares={current.squares} handleClick={ (i) => {this.handleClick(i)} } gameOver={winner} />
+          </div>
+          <div className="game-info">
+            <div>{status}</div>
+            <ol>{/* TODO */}</ol>
+          </div>
         </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{/* TODO */}</ol>
-          <HistoryManager history={history} rollbackHistoryCallback={ (i)=>{this.rollbackHistory(i)} } />
-        </div>
-      </div>
+      </>
     );
   }
 }

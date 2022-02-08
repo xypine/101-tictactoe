@@ -6,10 +6,17 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: #191919;
+  color: white;
+  overflow-x: hidden;
 }
 
 ol, ul {
   padding-left: 30px;
+}
+
+.spacer {
+  flex: 1;
 }
 
 .board-row:after {
@@ -23,7 +30,8 @@ ol, ul {
 }
 
 .square {
-  background: #fff;
+  background: var(--bg, #fff);
+  color: white;
   border: 1px solid #999;
   float: left;
   font-size: 24px;
@@ -49,16 +57,30 @@ ol, ul {
 .game {
   display: flex;
   flex-direction: row;
+  width: 100vw;
 }
 
 .game-info {
   margin-left: 20px;
+  flex: 1; /* Ensure the board stays centered */
+}
+
+.game-history {
+  flex: 1;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin-right: 20px; /* Ensure the board stays centered */
 }
 
 .history-container {
-  width: 0;
-  display: flex;
+  /* Prevent the history from affecting the positions of other game components */
+  height: 0;
   overflow: visible;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .history-element {
@@ -66,8 +88,8 @@ ol, ul {
   background: #222222;
   border: 2px solid #2d2d2d;
   color: white;
-  padding: .75em;
-  margin:  .25em;
+  padding: .25em 1em;
+  margin:  .25em 0;
   border-radius: .25em;
 }
 
@@ -77,5 +99,5 @@ ol, ul {
 }
 
 .history-button:hover {
-  background: gray;
+  background: #2d2d2d;
 }
