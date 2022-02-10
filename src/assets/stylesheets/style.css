@@ -132,3 +132,22 @@ ol, ul {
 .history-button:hover {
   background: #2d2d2d;
 }
+
+
+@media screen and (max-width: 370px) {
+  :root {
+    --game-scale: 1;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  :root {
+    --game-scale: 1.25;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  :root {
+    --game-scale: 1.5;
+  }
+}
